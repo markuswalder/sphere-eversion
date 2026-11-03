@@ -1,0 +1,168 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Smale's sphere eversion theorem, via Gromov's h-principle (the sphere eversion project)"
+  description: >-
+    A Lean 4 and Mathlib formalization of Gromov's h-principle for open and ample
+    first-order partial differential relations for maps between finite-dimensional
+    smooth manifolds, proved by convex integration in the form due to Theillière,
+    and of its corollary, Smale's sphere eversion theorem: there is a jointly smooth
+    family of maps f_t from the unit sphere in Euclidean three-space to that space,
+    indexed by real t, with f_0 the inclusion, f_1 the antipodal map, and every f_t
+    an immersion. The Palomar entry checks the sphere eversion statement.
+  authors:
+    - "Patrick Massot"
+    - "Floris van Doorn"
+    - "Oliver Nash"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Patrick Massot"
+    - "Floris van Doorn"
+    - "Oliver Nash"
+
+classification:
+  arxiv: [math.GT, math.DG]
+  msc2020: ["57R42", "58A20", "03B35"]
+
+sources:
+  - title: "A classification of immersions of the two-sphere"
+    authors:
+      - "Stephen Smale"
+    id: "doi:10.1090/S0002-9947-1959-0104227-9"
+    type: paper
+    location: "Trans. Amer. Math. Soc. 90 (1959), no. 2, 281-290"
+    relationship: independently-proves
+    note: >-
+      Origin of the theorem. The formal proof does not follow Smale's argument; it
+      derives the eversion from Gromov's h-principle. Only the special case of the
+      inclusion and the antipodal map is formalized, not the full classification of
+      immersions of the two-sphere up to regular homotopy.
+  - title: "Convex integration of differential relations. I"
+    authors:
+      - "Mikhael Gromov"
+    id: "doi:10.1070/IM1973v007n02ABEH001940"
+    type: paper
+    location: "Math. USSR-Izv. 7 (1973), no. 2, 329-343 (translation of Izv. Akad. Nauk SSSR Ser. Mat. 37 (1973))"
+    relationship: formalizes
+    note: >-
+      Source of the h-principle for open and ample relations, of which sphere
+      eversion is a corollary. The formalization follows Theillière's version of
+      convex integration rather than Gromov's original construction.
+  - title: "Convex integration theory without integration"
+    authors:
+      - "Mélanie Theillière"
+    id: "doi:10.1007/s00209-021-02785-9"
+    type: paper
+    location: "Math. Z. 300 (2022), no. 3, 2737-2770; arXiv:1909.04908"
+    relationship: formalizes
+    note: "The corrugation-based convex integration process used in the local h-principle."
+  - title: "The sphere eversion project (blueprint)"
+    authors:
+      - "Patrick Massot"
+      - "Oliver Nash"
+      - "Floris van Doorn"
+    id: "https://leanprover-community.github.io/sphere-eversion/blueprint/index.html"
+    type: other
+    relationship: formalizes
+    note: >-
+      Informal proof written for this formalization, which the Lean development
+      follows; it is maintained in this repository under blueprint/.
+  - title: "Formalising the h-principle and sphere eversion"
+    authors:
+      - "Floris van Doorn"
+      - "Patrick Massot"
+      - "Oliver Nash"
+    id: "doi:10.1145/3573105.3575688"
+    type: paper
+    location: "Proceedings of the 12th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP 2023), 121-134; arXiv:2210.07746"
+    relationship: background
+    note: >-
+      Paper by the formalizers describing the formalization (author order as in the
+      published proceedings; the arXiv version lists Massot, van Doorn, Nash).
+
+related_formalizations: []
+
+status:
+  scope: >-
+    The Comparator configuration checks Smale's sphere eversion statement (theorem
+    Smale) only: a C^infinity family of immersions of the unit sphere of
+    EuclideanSpace R (Fin 3), parametrized by all real t, from the inclusion (t = 0)
+    to the antipodal map (t = 1). Immersion means C^n with injective manifold
+    derivative at every point. The project also proves Gromov's h-principle for open
+    and ample first-order relations between manifolds (theorem Gromov in
+    SphereEversion/Main.lean), but that theorem is not part of this Challenge. Smale's
+    full classification of immersions of S^2 up to regular homotopy is not formalized.
+    The directory SphereEversion/ToMathlib/Unused/ holds four unmaintained files that
+    nothing in the library imports; three of them no longer compile against the
+    pinned Mathlib and contain sorry. They are not built and play no role in the
+    proof; the sorry count above covers the built library.
+  # Counted from `lake build` of the library (no `declaration uses sorry` warnings) and
+  # `#print axioms` (Smale and Gromov use only propext, Classical.choice, Quot.sound).
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+  main_results:
+    - "Smale (SphereEversion/Main.lean; Challenge.lean)"
+    - "Gromov (SphereEversion/Main.lean; not in this Challenge)"
+
+automation:
+  methods:
+    - method: manual
+      models: []
+      framework: "n/a"
+      tool_setup: >-
+        Written by hand in Lean 3 (2020-2022), later ported to Lean 4 and maintained
+        against Mathlib; no AI system was used in the mathematical development.
+      prompting_notes: "n/a"
+    - method: agent
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: >-
+        Used in November 2026 only to prepare the Palomar submission: writing
+        Challenge.lean, Solution.lean, comparator.json, this file and the README
+        section, and running the local checks. It did not change the proof
+        development; Solution.lean applies the existing theorem sphere_eversion.
+      cost:
+        wall_time: "one session"
+        spend_usd: "not tracked"
+        hardware: "API-only, with a local machine for Lean builds"
+      prompting_notes: >-
+        The submitter instructed the agent to follow the Palomar policy and to
+        copy the project's Immersion definition verbatim into the Challenge.
+  spend_usd: "not tracked"
+  notes: >-
+    The mathematical development was written by its human authors. The Palomar
+    packaging files were drafted by an AI agent and reviewed by the submitter.
+
+fidelity:
+  divergences: >-
+    The time parameter ranges over all of R rather than [0, 1] (a stronger form).
+    Immersions are defined as C^n maps with everywhere injective manifold
+    derivative, which is the standard notion in finite dimensions. Only the
+    eversion (inclusion to antipodal map) is stated, not Smale's general
+    classification.
+
+review:
+  status: peer-reviewed
+  reviewers:
+    - "Anonymous referees of CPP 2023"
+  notes: >-
+    The formalization was reviewed together with the paper "Formalising the
+    h-principle and sphere eversion" (CPP 2023, doi:10.1145/3573105.3575688). That
+    review concerned the Lean 3 development of 2022; the current Lean 4 port, the
+    Challenge/Solution pair and this metadata were not separately peer-reviewed.
+    The Challenge statement was checked against Solution by Comparator.
+
+alignment:
+  namespace: "_root_ (Smale is declared without a namespace)"
+  statements:
+    - source: "Smale (1959): the inclusion S^2 -> R^3 and the antipodal map are regularly homotopic"
+      lean: "Smale"
+      module: "Challenge"
+      status: proved
+      note: "Proved in Solution.lean by sphere_eversion applied to EuclideanSpace R (Fin 3)."
+
+acknowledgements: >-
+  The Lean 4 port was carried out with crucial help from Yury Kudryashov, and the
+  project benefited from help from the wider Lean community and Mathlib.

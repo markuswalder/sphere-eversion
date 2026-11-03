@@ -7,6 +7,23 @@ Details can be found on the [project website.](https://leanprover-community.gith
 
 This project originally used Lean 3 but was ported to Lean 4 with crucial help from Yury Kudryashov.
 
+# Statement checked for the Palomar registry
+
+[`Challenge.lean`](Challenge.lean) states Smale's sphere eversion theorem using Mathlib only:
+there is a family of maps `f t` from the unit sphere `𝕊²` of `ℝ³` to `ℝ³`, indexed by
+`t : ℝ` and jointly smooth in `(t, x)`, with `f 0` the inclusion, `f 1` the antipodal map
+`x ↦ -x`, and every `f t` a smooth immersion (a smooth map with injective differential at
+every point). [`Solution.lean`](Solution.lean) proves it from this project, and
+[`comparator.json`](comparator.json) tells
+[Comparator](https://github.com/leanprover/comparator) to check that the two statements agree
+and that the proof uses only the axioms `propext`, `Quot.sound` and `Classical.choice`.
+
+The Challenge covers only the eversion statement (theorem `Smale` in `SphereEversion/Main.lean`),
+not Gromov's general h-principle (theorem `Gromov` in the same file) and not Smale's full
+classification of immersions of the sphere. Provenance, sources and limitations are recorded in
+[`formalization.yaml`](formalization.yaml); submissions go to
+<https://submit.palomar-registry.org/>.
+
 # Build the Lean files
 
 To build the Lean files of this project, you need to have a working version of Lean.
